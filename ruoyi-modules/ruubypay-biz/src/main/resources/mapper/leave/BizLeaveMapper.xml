@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruubypay.biz.leave.mapper.BizLeaveMapper">
+    
+    <resultMap type="com.ruubypay.biz.leave.domain.BizLeave" id="BizLeaveResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="title"    column="title"    />
+        <result property="reason"    column="reason"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="totalTime"    column="total_time"    />
+        <result property="instanceId"    column="instance_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="applyUser"    column="apply_user"    />
+        <result property="applyTime"    column="apply_time"    />
+        <result property="realityStartTime"    column="reality_start_time"    />
+        <result property="realityEndTime"    column="reality_end_time"    />
+    </resultMap>
+
+    <sql id="selectBizLeaveVo">
+        select id, type, title, reason, start_time, end_time, total_time, instance_id, create_by, create_time, update_by, update_time, apply_user, apply_time, reality_start_time, reality_end_time from biz_leave
+    </sql>
+
+    <select id="selectBizLeaveList" parameterType="com.ruubypay.biz.leave.domain.BizLeave" resultMap="BizLeaveResult">
+        <include refid="selectBizLeaveVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="startTime != null "> and start_time &gt;= #{startTime}</if>
+            <if test="endTime != null "> and end_time &lt;= #{endTime}</if>
+            <if test="applyUser != null  and applyUser != ''"> and apply_user = #{applyUser}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizLeaveById" parameterType="Long" resultMap="BizLeaveResult">
+        <include refid="selectBizLeaveVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBizLeave" parameterType="com.ruubypay.biz.leave.domain.BizLeave" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_leave
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="title != null">title,</if>
+            <if test="reason != null">reason,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="totalTime != null">total_time,</if>
+            <if test="instanceId != null">instance_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="applyUser != null">apply_user,</if>
+            <if test="applyTime != null">apply_time,</if>
+            <if test="realityStartTime != null">reality_start_time,</if>
+            <if test="realityEndTime != null">reality_end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="title != null">#{title},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="totalTime != null">#{totalTime},</if>
+            <if test="instanceId != null">#{instanceId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="applyUser != null">#{applyUser},</if>
+            <if test="applyTime != null">#{applyTime},</if>
+            <if test="realityStartTime != null">#{realityStartTime},</if>
+            <if test="realityEndTime != null">#{realityEndTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizLeave" parameterType="com.ruubypay.biz.leave.domain.BizLeave">
+        update biz_leave
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="totalTime != null">total_time = #{totalTime},</if>
+            <if test="instanceId != null">instance_id = #{instanceId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="applyUser != null">apply_user = #{applyUser},</if>
+            <if test="applyTime != null">apply_time = #{applyTime},</if>
+            <if test="realityStartTime != null">reality_start_time = #{realityStartTime},</if>
+            <if test="realityEndTime != null">reality_end_time = #{realityEndTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizLeaveById" parameterType="Long">
+        delete from biz_leave where id = #{id}
+    </delete>
+
+    <delete id="deleteBizLeaveByIds" parameterType="String">
+        delete from biz_leave where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
