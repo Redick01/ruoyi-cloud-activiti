@@ -1,5 +1,6 @@
 package com.ruoyi.system.api;
 
+import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,4 +41,22 @@ public interface RemoteUserService
      */
     @PostMapping("/user/register")
     public R<Boolean> registerUserInfo(@RequestBody SysUser sysUser, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+
+    /**
+     * 获取用户列表
+     * @param user {@link SysUser}
+     * @param source {@link String}
+     * @return 用户列表
+     */
+    @PostMapping("/user/selectUserList")
+    public R<List<SysUser>> selectUserList(@RequestBody SysUser user, @RequestHeader(SecurityConstants.INNER) String source);
+
+    /**
+     * 通过角色Key获取用户列表
+     * @param roleKey 角色Key
+     * @param source {@link String}
+     * @return 用户列表
+     */
+    @GetMapping("/user/selectUserListByRoleKey/{roleKey}")
+    public R<List<SysUser>> selectUserListByRoleKey(@PathVariable("roleKey") String roleKey, @RequestHeader(SecurityConstants.INNER) String source);
 }

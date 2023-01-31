@@ -1,7 +1,9 @@
 package com.ruubypay.biz.leave.service;
 
+import com.ruubypay.biz.leave.domain.vo.BizLeaveVo;
 import java.util.List;
 import com.ruubypay.biz.leave.domain.BizLeave;
+import java.util.Map;
 
 /**
  * 请假业务Service接口
@@ -17,7 +19,7 @@ public interface IBizLeaveService
      * @param id 请假业务主键
      * @return 请假业务
      */
-    public BizLeave selectBizLeaveById(Long id);
+    public BizLeaveVo selectBizLeaveById(Long id);
 
     /**
      * 查询请假业务列表
@@ -33,7 +35,7 @@ public interface IBizLeaveService
      * @param bizLeave 请假业务
      * @return 结果
      */
-    public int insertBizLeave(BizLeave bizLeave);
+    public int insertBizLeave(BizLeaveVo bizLeave);
 
     /**
      * 修改请假业务
@@ -58,4 +60,12 @@ public interface IBizLeaveService
      * @return 结果
      */
     public int deleteBizLeaveById(Long id);
+
+    /**
+     * 调用工作流中心 启动流程
+     * @param entity 请加业务数据
+     * @param applyUserId 提交者标识
+     */
+    void submitApply(BizLeaveVo entity, String applyUserId, String key, Map<String, Object> variables);
+
 }

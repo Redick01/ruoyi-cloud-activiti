@@ -191,10 +191,11 @@ var KisBpmChoseAssignmentCtrl = ['$scope', '$http', function($scope, $http) {
 	    	method: 'get',
 	        headers: {'Accept': 'application/json',
 	                  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-	        url: '/dev-api/modeler/role/list'})
+	        url: '/dev-api/activiti/modeler/role/list'})
 
 	        .success(function (data, status, headers, config) {
 	        	var obj = data.rows;
+	        	console.log("------------------" + obj)
 	        	for (var i=0; i<obj.length; i++) {
 	        		if (i==0) {
 	        			initId = obj[i].roleKey + "";
@@ -215,7 +216,7 @@ var KisBpmChoseAssignmentCtrl = ['$scope', '$http', function($scope, $http) {
 	    	method: 'get',
 	        headers: {'Accept': 'application/json',
 	                  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-	        url: '/dev-api/modeler/user/listByRoleKey?roleKey=' + value})
+	        url: '/dev-api/activiti/modeler/user/listByRoleKey?roleKey=' + value})
 
 	        .success(function (data, status, headers, config) {
 	  		    if (data != null) {
@@ -280,7 +281,7 @@ var KisBpmChoseCandidateGroupsCtrl = ['$scope', '$http', function($scope, $http)
 	    	method: 'get',
 	        headers: {'Accept': 'application/json',
 	                  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-	        url: '/dev-api/modeler/role/list'})
+	        url: '/dev-api/activiti/modeler/role/list'})
 
 	        .success(function (data, status, headers, config) {
 	        	var obj = data.rows;

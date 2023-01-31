@@ -34,6 +34,11 @@ public @interface Excel
     public String dateFormat() default "";
 
     /**
+     * 如果是字典类型，请设置字典的type值 (如: sys_user_sex)
+     */
+    public String dictType() default "";
+
+    /**
      * 读取内容转表达式 (如: 0=男,1=女,2=未知)
      */
     public String readConverterExp() default "";
@@ -132,6 +137,27 @@ public @interface Excel
      * 导出字段对齐方式
      */
     public HorizontalAlignment align() default HorizontalAlignment.CENTER;
+
+    /**
+     * 导出字段对齐方式（0：默认；1：靠左；2：居中；3：靠右）
+     */
+    Align align1() default Align.AUTO;
+
+    public enum Align
+    {
+        AUTO(0), LEFT(1), CENTER(2), RIGHT(3);
+        private final int value;
+
+        Align(int value)
+        {
+            this.value = value;
+        }
+
+        public int value()
+        {
+            return this.value;
+        }
+    }
 
     /**
      * 自定义数据处理器

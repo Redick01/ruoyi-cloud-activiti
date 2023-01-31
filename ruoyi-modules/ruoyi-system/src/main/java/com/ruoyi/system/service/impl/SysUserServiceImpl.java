@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.common.core.domain.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -541,4 +542,8 @@ public class SysUserServiceImpl implements ISysUserService
         return successMsg.toString();
     }
 
+    @Override
+    public List<SysUser> selectUserListByRoleKey(String roleKey) {
+        return userMapper.selectUserListByRoleKey(roleKey);
+    }
 }

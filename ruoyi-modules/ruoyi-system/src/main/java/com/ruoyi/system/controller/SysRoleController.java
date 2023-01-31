@@ -1,5 +1,6 @@
 package com.ruoyi.system.controller;
 
+import com.ruoyi.common.core.domain.R;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,5 +237,10 @@ public class SysRoleController extends BaseController
         ajax.put("checkedKeys", deptService.selectDeptListByRoleId(roleId));
         ajax.put("depts", deptService.selectDeptTreeList(new SysDept()));
         return ajax;
+    }
+
+    @PostMapping("/selectRoleList")
+    public R<List<SysRole>> selectRoleList(SysRole role) {
+        return R.ok(roleService.selectRoleList(role));
     }
 }

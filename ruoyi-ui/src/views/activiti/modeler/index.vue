@@ -237,7 +237,7 @@
       designModeler(id) {
         // 打开新标签页
         const routeUrl = this.$router.resolve({
-          path: process.env.VUE_APP_BASE_API + "/modeler/modeler.html?modelId=" + id,
+          path: process.env.VUE_APP_BASE_API + "/activiti/modeler/modeler.html?modelId=" + id,
         });
         window.open(routeUrl.href, '_blank');
       },

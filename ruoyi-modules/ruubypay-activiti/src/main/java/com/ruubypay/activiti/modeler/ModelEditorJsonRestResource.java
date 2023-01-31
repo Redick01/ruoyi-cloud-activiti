@@ -14,8 +14,17 @@ package com.ruubypay.activiti.modeler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.ruoyi.common.core.constant.SecurityConstants;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.web.controller.BaseController;
+import com.ruoyi.common.core.web.page.TableDataInfo;
+import com.ruoyi.system.api.RemoteRoleService;
+import com.ruoyi.system.api.RemoteUserService;
+import com.ruoyi.system.api.domain.SysRole;
+import com.ruoyi.system.api.domain.SysUser;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.engine.ActivitiException;
@@ -24,6 +33,8 @@ import org.activiti.engine.repository.Model;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,11 +50,15 @@ public class ModelEditorJsonRestResource extends BaseController implements Model
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ModelEditorJsonRestResource.class);
 
-  private RepositoryService repositoryService;
-  private ObjectMapper objectMapper;
-//  private ISysUserService userService;
-//  private ISysRoleService roleService;
-//  private SysUserMapper userMapper;
+  private final RepositoryService repositoryService;
+
+  private final ObjectMapper objectMapper;
+
+  @Autowired
+  private RemoteUserService remoteUserService;
+
+  @Autowired
+  private RemoteRoleService remoteRoleService;
 
   @RequestMapping(value="/modeler/model/{modelId}/json", method = RequestMethod.GET, produces = "application/json")
   public ObjectNode getEditorJson(@PathVariable String modelId) {
@@ -77,38 +92,36 @@ public class ModelEditorJsonRestResource extends BaseController implements Model
    * @param user
    * @return
    */
-//  @GetMapping("/list")
-//  public TableDataInfo list(SysUser user)
-//  {
-//    startPage();
-//    List<SysUser> list = userService.selectUserList(user);
-//    return getDataTable(list);
-//  }
+  @GetMapping("/list")
+  public TableDataInfo list(SysUser user) {
+    startPage();
+    R<List<SysUser>> selectUserList = remoteUserService.selectUserList(user, SecurityConstants.INNER);
+    return getDataTable(selectUserList.getData());
+  }
 
   /**
    * 角色列表
    * @param role
    * @return
    */
-//  @GetMapping("/modeler/role/list")
-//  public TableDataInfo list(SysRole role)
-//  {
-//    startPage();
-//    List<SysRole> list = roleService.selectRoleList(role);
-//    return getDataTable(list);
-//  }
+  @GetMapping("/modeler/role/list")
+  public TableDataInfo list(SysRole role)
+  {
+    startPage();
+    R<List<SysRole>> listR = remoteRoleService.selectRoleList(role, SecurityConstants.INNER);
+    return getDataTable(listR.getData());
+  }
 
   /**
    * 某角色下的用户列表
    * @param roleKey
    * @return
    */
-//  @GetMapping("/modeler/user/listByRoleKey")
-//  public TableDataInfo list(String roleKey)
-//  {
-//    startPage();
-//    List<SysUser> list = userMapper.selectUserListByRoleKey(roleKey);
-//    return getDataTable(list);
-//  }
+  @GetMapping("/modeler/user/listByRoleKey")
+  public TableDataInfo list(String roleKey) {
+    startPage();
+    R<List<SysUser>> listR = remoteUserService.selectUserListByRoleKey(roleKey, SecurityConstants.INNER);
+    return getDataTable(listR.getData());
+  }
 
 }

@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author 一只闲鹿
  */
 @Controller
-@RequestMapping("/activiti/modeler")
+@RequestMapping("/modeler")
 @AllArgsConstructor
 public class ModelerController extends BaseController {
 
@@ -120,7 +120,7 @@ public class ModelerController extends BaseController {
 
             repositoryService.saveModel(newModel);
             repositoryService.addModelEditorSource(newModel.getId(), editorNode.toString().getBytes(StandardCharsets.UTF_8));
-
+            logger.info("创建模型成功：[{}]", newModel.getName());
             return new AjaxResult(200, "创建模型成功", newModel.getId());
         } catch (Exception e) {
             logger.error("创建模型失败：", e);

@@ -1,5 +1,6 @@
 package com.ruoyi.system.api.factory;
 
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -35,6 +36,16 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
             public R<Boolean> registerUserInfo(SysUser sysUser, String source)
             {
                 return R.fail("注册用户失败:" + throwable.getMessage());
+            }
+
+            @Override
+            public R<List<SysUser>> selectUserList( SysUser user, String source ) {
+                return R.fail("获取用户列表失败:" + throwable.getMessage());
+            }
+
+            @Override
+            public R<List<SysUser>> selectUserListByRoleKey( String roleKey, String source ) {
+                return R.fail("根据角色Key获取用户列表失败:" + throwable.getMessage());
             }
         };
     }

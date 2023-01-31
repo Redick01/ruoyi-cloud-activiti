@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruubypay.biz.leave.mapper.BizLeaveMapper">
     
-    <resultMap type="com.ruubypay.biz.leave.domain.BizLeave" id="BizLeaveResult">
+    <resultMap type="com.ruubypay.biz.leave.domain.vo.BizLeaveVo" id="BizLeaveResult">
         <result property="id"    column="id"    />
         <result property="type"    column="type"    />
         <result property="title"    column="title"    />

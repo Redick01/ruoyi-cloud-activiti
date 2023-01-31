@@ -92,6 +92,12 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-core</artifactId>
         </dependency>
+    
+        <!-- RuoYi Redis -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-redis</artifactId>
+        </dependency>
         
         <!-- Activiti Start -->
         <dependency>
@@ -160,6 +166,10 @@
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-svggen</artifactId>
             <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-system</artifactId>
         </dependency>
         <!-- xml解析依赖-->
     </dependencies>

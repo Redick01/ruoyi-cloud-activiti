@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import com.ruoyi.common.core.domain.R;
 import java.util.List;
 import com.ruoyi.system.api.domain.SysUser;
 
@@ -203,4 +204,11 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
+    /**
+     * 根据角色Key获取用户列表
+     * @param roleKey 角色key
+     * @return 用户列表
+     */
+    public List<SysUser> selectUserListByRoleKey(String roleKey);
 }

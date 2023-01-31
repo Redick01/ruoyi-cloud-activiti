@@ -1,5 +1,6 @@
 package com.ruubypay.biz.leave.mapper;
 
+import com.ruubypay.biz.leave.domain.vo.BizLeaveVo;
 import java.util.List;
 import com.ruubypay.biz.leave.domain.BizLeave;
 
@@ -17,7 +18,7 @@ public interface BizLeaveMapper
      * @param id 请假业务主键
      * @return 请假业务
      */
-    public BizLeave selectBizLeaveById(Long id);
+    public BizLeaveVo selectBizLeaveById(Long id);
 
     /**
      * 查询请假业务列表

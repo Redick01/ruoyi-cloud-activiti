@@ -1,7 +1,10 @@
 package com.ruubypay.biz.leave.service.impl;
 
+import com.ruubypay.biz.leave.domain.vo.BizLeaveVo;
+import java.util.Date;
 import java.util.List;
 import com.ruoyi.common.core.utils.DateUtils;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruubypay.biz.leave.mapper.BizLeaveMapper;
@@ -27,7 +30,7 @@ public class BizLeaveServiceImpl implements IBizLeaveService
      * @return 请假业务
      */
     @Override
-    public BizLeave selectBizLeaveById(Long id)
+    public BizLeaveVo selectBizLeaveById(Long id)
     {
         return bizLeaveMapper.selectBizLeaveById(id);
     }
@@ -51,7 +54,7 @@ public class BizLeaveServiceImpl implements IBizLeaveService
      * @return 结果
      */
     @Override
-    public int insertBizLeave(BizLeave bizLeave)
+    public int insertBizLeave( BizLeaveVo bizLeave)
     {
         bizLeave.setCreateTime(DateUtils.getNowDate());
         return bizLeaveMapper.insertBizLeave(bizLeave);
@@ -92,5 +95,22 @@ public class BizLeaveServiceImpl implements IBizLeaveService
     public int deleteBizLeaveById(Long id)
     {
         return bizLeaveMapper.deleteBizLeaveById(id);
+    }
+
+    @Override
+    public void submitApply( BizLeaveVo entity, String applyUserId, String key,
+            Map<String, Object> variables ) {
+        entity.setApplyUser(applyUserId);
+        entity.setApplyTime(DateUtils.getNowDate());
+        entity.setUpdateBy(applyUserId);
+        bizLeaveMapper.updateBizLeave(entity);
+        // 请假的业务ID，作为流程的key
+        String businessKey = entity.getId().toString();
+        // 调用流程中心启动流程，并启动processInstanceId与业务数据关联起来
+
+        // 流程实例ID
+        String processInstanceId = "";
+        entity.setInstanceId(processInstanceId);
+        bizLeaveMapper.updateBizLeave(entity);
     }
 }

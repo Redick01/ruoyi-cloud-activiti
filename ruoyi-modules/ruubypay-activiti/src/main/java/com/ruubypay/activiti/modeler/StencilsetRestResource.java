@@ -31,6 +31,7 @@ public class StencilsetRestResource {
   public @ResponseBody String getStencilset() {
     InputStream stencilsetStream = this.getClass().getClassLoader().getResourceAsStream("stencilset.json");
     try {
+      assert stencilsetStream != null;
       return IOUtils.toString(stencilsetStream, StandardCharsets.UTF_8);
     } catch (Exception e) {
       throw new ActivitiException("Error while loading stencil set", e);
