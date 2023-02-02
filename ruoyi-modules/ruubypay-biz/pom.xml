@@ -46,13 +46,6 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     
-        <!-- Activiti -->
-        <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-rest</artifactId>
-            <version>6.0.0</version>
-        </dependency>
-    
         <!-- Swagger UI -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -84,6 +77,18 @@
             <artifactId>ruoyi-common-log</artifactId>
         </dependency>
     
+        <!-- RuoYi System API -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-system</artifactId>
+        </dependency>
+    
+        <!-- RuoYi System API -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-activiti</artifactId>
+        </dependency>
+        
         <!-- RuoYi Common Swagger -->
         <dependency>
             <groupId>com.ruoyi</groupId>

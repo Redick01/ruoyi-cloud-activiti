@@ -58,11 +58,11 @@
     </appender>
 
     <!-- 系统模块日志级别控制  -->
-	<logger name="com.ruubypay" level="info" />
+	<logger name="com.ruubypay" level="debug" />
 	<!-- Spring日志级别控制  -->
-	<logger name="org.springframework" level="warn" />
+	<logger name="org.springframework" level="debug" />
 
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="console" />
 	</root>
 	

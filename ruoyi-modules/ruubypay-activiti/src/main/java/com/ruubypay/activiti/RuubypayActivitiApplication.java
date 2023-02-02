@@ -1,9 +1,9 @@
 package com.ruubypay.activiti;
 
+import com.ruoyi.common.security.annotation.EnableCustomConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author Redick01
@@ -14,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
         org.activiti.spring.boot.SecurityAutoConfiguration.class
 })
 @EnableFeignClients(basePackages = "com.ruoyi.system.api")
+@EnableCustomConfig
 public class RuubypayActivitiApplication {
 
     public static void main( String[] args ) {

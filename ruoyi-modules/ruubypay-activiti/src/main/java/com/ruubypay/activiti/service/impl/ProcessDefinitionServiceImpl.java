@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntityImpl;
@@ -26,6 +27,7 @@ import org.springframework.util.CollectionUtils;
  */
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ProcessDefinitionServiceImpl implements IProcessDefinitionService {
 
     private final RuntimeService runtimeService;
@@ -108,7 +110,8 @@ public class ProcessDefinitionServiceImpl implements IProcessDefinitionService {
                 }
             }
         } catch (Exception e) {
-            System.out.println("流程定义模块异常：" + e.getMessage());
+            e.printStackTrace();
+            log.error("流程定义模块异常：", e);
         }
     }
 

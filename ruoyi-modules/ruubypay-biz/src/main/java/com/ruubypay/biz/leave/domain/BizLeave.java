@@ -1,5 +1,6 @@
 package com.ruubypay.biz.leave.domain;
 
+import com.ruoyi.activiti.api.domain.ProcessEntity;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -13,7 +14,7 @@ import com.ruoyi.common.core.web.domain.BaseEntity;
  * @author Redick
  * @date 2023-01-29
  */
-public class BizLeave extends BaseEntity
+public class BizLeave extends ProcessEntity
 {
     private static final long serialVersionUID = 1L;
 

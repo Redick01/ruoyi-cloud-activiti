@@ -65,7 +65,8 @@ public interface IBizLeaveService
      * 调用工作流中心 启动流程
      * @param entity 请加业务数据
      * @param applyUserId 提交者标识
+     * @param key 流程模型key
+     * @param variables 动态参数
      */
     void submitApply(BizLeaveVo entity, String applyUserId, String key, Map<String, Object> variables);
-
 }

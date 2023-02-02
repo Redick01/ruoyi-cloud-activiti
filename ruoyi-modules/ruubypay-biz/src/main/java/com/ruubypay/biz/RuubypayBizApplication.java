@@ -11,8 +11,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableCustomConfig
 @EnableCustomSwagger2
-@EnableFeignClients(basePackages = "com.ruubypay.biz.remote")
-@SpringBootApplication
+@EnableFeignClients(basePackages = {"com.ruoyi.activiti.api", "com.ruoyi.system.api"})
+@SpringBootApplication(exclude = {
+        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
+        org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class,
+})
 public class RuubypayBizApplication {
 
     public static void main( String[] args ) {

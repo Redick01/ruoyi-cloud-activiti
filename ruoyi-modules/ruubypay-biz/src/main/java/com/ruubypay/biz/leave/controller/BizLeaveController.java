@@ -3,6 +3,7 @@ package com.ruubypay.biz.leave.controller;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.model.LoginUser;
 import com.ruubypay.biz.leave.domain.vo.BizLeaveVo;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,12 +90,17 @@ public class BizLeaveController extends BaseController
     }
 
     @Log(title = "提交请假单", businessType = BusinessType.UPDATE)
-    @PostMapping("/submitApply")
+    @PostMapping("/submitApply/{id}")
     @ResponseBody
-    public AjaxResult submitApply(Long id) {
-        BizLeaveVo leave = bizLeaveService.selectBizLeaveById(id);
-        String applyUserId = SecurityUtils.getUsername();
-
+    public AjaxResult submitApply(@PathVariable Long id) {
+        try {
+            BizLeaveVo bizLeave = bizLeaveService.selectBizLeaveById(id);
+            String applyUserId = SecurityUtils.getLoginUser().getUsername();
+            bizLeaveService.submitApply(bizLeave, applyUserId, "leave", new HashMap<>());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return error("提交申请出错：" + e.getMessage());
+        }
         return success();
     }
 

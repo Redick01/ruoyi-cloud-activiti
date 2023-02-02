@@ -201,7 +201,7 @@
   import { format, formatTotalDateSub } from "@/utils/activiti/myUtil.js"
   import { listUser } from "@/api/system/user";
   import DemoForm from "@/views/example/demo/demoForm";
-  import LeaveForm from "@/views/leave/leave/leaveForm";
+  import LeaveForm from "@/views/business/leave/leaveForm";
 
   export default {
     name: "ApplyAfter",

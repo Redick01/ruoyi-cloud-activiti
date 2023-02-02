@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * @author 一只闲鹿
+ * @author Redick
  */
 @Controller
 @RequestMapping("/definition")
@@ -82,7 +82,7 @@ public class ProcessDefinitionController extends BaseController {
                 }
                 String fileName = FileUploadUtils.upload(uploadPath + "/processDefiniton", file);
                 if (StringUtils.isNotBlank(fileName)) {
-                    String realFilePath = uploadPath + fileName.substring(Constants.RESOURCE_PREFIX.length());
+                    String realFilePath = uploadPath + "/processDefiniton" + fileName;
                     processDefinitionService.deployProcessDefinition(realFilePath);
                     return success();
                 }
