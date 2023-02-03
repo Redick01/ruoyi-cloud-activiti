@@ -275,10 +275,6 @@
     methods: {
       _handleView: function () {
         switch (this.row.processKey) {
-          case 'exampleDemo':
-            this.$refs.demoForm.form = this.row;
-            this.$refs.demoForm.open = true;
-            break;
           case 'leave':
             this.$refs.leaveForm.form = this.row;
             this.$refs.leaveForm.open = true;

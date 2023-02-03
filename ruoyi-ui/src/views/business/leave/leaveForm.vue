@@ -19,17 +19,17 @@
         <el-form-item label="原因" prop="reason">
           <el-input v-model="form.reason" type="textarea" :readonly="taskName!=='调整申请'" />
         </el-form-item>
-        <el-form-item label="开始时间" prop="leaveStartTime">
+        <el-form-item label="开始时间" prop="startTime">
           <el-date-picker clearable size="small" style="width: 200px"
-                          v-model="form.leaveStartTime"
+                          v-model="form.startTime"
                           type="date"
                           value-format="yyyy-MM-dd"
                           :readonly="taskName!=='调整申请'">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="结束时间" prop="leaveEndTime">
+        <el-form-item label="结束时间" prop="endTime">
           <el-date-picker clearable size="small" style="width: 200px"
-                          v-model="form.leaveEndTime"
+                          v-model="form.endTime"
                           type="date"
                           value-format="yyyy-MM-dd"
                           :readonly="taskName!=='调整申请'">
@@ -125,10 +125,10 @@
           reason: [
             { required: true, message: "原因不能为空", trigger: "blur" },
           ],
-          leaveStartTime: [
+          startTime: [
             { required: true, message: "开始时间不能为空", trigger: "blur" },
           ],
-          leaveEndTime: [
+          endTime: [
             { required: true, message: "结束时间不能为空", trigger: "blur" },
           ],
           realityStartTime: [
