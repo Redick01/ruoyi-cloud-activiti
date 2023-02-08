@@ -12,6 +12,8 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.spring.SpringProcessEngineConfiguration;
+import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +31,23 @@ import org.springframework.web.bind.annotation.RestController;
         @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {
                 RestController.class})}, useDefaultFilters = false, lazyInit = false)
 @Configuration
-public class ActivitiConfig {
+public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
+
+    @Autowired
+    private ICustomProcessDiagramGenerator customProcessDiagramGenerator;
+
+    /**
+     * 解決工作流生成图片乱码问题
+     *
+     * @param processEngineConfiguration
+     */
+    @Override
+    public void configure(SpringProcessEngineConfiguration processEngineConfiguration) {
+        processEngineConfiguration.setActivityFontName("宋体");
+        processEngineConfiguration.setAnnotationFontName("宋体");
+        processEngineConfiguration.setLabelFontName("宋体");
+        processEngineConfiguration.setProcessDiagramGenerator(customProcessDiagramGenerator);
+    }
 
     @Bean
     public ProcessEngine processEngine(DataSourceTransactionManager transactionManager, DataSource dataSource) throws IOException {

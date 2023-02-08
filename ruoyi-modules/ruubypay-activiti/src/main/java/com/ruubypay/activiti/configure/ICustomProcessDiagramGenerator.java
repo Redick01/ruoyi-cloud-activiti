@@ -5,11 +5,12 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.image.ProcessDiagramGenerator;
 
 /**
  * @author Redick01
  */
-public interface ICustomProcessDiagramGenerator {
+public interface ICustomProcessDiagramGenerator extends ProcessDiagramGenerator {
 
     InputStream generateDiagram(
             BpmnModel bpmnModel, String imageType, List<String> highLightedActivities,

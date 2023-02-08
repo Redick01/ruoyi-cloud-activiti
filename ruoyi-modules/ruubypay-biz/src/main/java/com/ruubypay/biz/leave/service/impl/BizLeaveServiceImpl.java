@@ -2,21 +2,19 @@ package com.ruubypay.biz.leave.service.impl;
 
 import com.ruoyi.activiti.api.RemoteActivitiService;
 import com.ruoyi.activiti.api.domain.InstanceBusiness;
+import com.ruoyi.activiti.api.domain.ProcessInstanceStartRequest;
 import com.ruoyi.common.core.constant.SecurityConstants;
 import com.ruoyi.common.core.utils.CharConvertUtil;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruubypay.biz.leave.domain.vo.BizLeaveVo;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import com.ruoyi.common.core.utils.DateUtils;
 import java.util.Map;
 import java.util.Objects;
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.impl.persistence.entity.TaskEntityImpl;
-import org.activiti.engine.task.Task;
-import org.activiti.rest.service.api.runtime.process.ProcessInstanceCreateRequest;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.rest.service.api.runtime.process.ProcessInstanceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,24 +69,24 @@ public class BizLeaveServiceImpl implements IBizLeaveService
                         item.setTaskName("未启动");
                     } else {
                         // 根据instanceId获取Task，如果Task存在更新Task信息，如果Task没有查询HistoricTaskInstance
-                        Task task = remoteActivitiService.queryTaskListByInstanceId(item.getInstanceId(),
-                                SecurityConstants.FROM_SOURCE);
+                        Map<String, Object> task = remoteActivitiService.queryTaskListByInstanceId(item.getInstanceId(),
+                                SecurityConstants.FROM_SOURCE).getData();
                         if (!Objects.isNull(task)) {
-                            TaskEntityImpl taskEntity = (TaskEntityImpl) task;
-                            item.setTaskId(taskEntity.getId());
-                            if (2 == taskEntity.getSuspensionState()) {
+                            item.setTaskId(task.get("id").toString());
+                            item.setProcessKey("leave");
+                            if (2 == (int) task.get("suspensionState")) {
                                 item.setTaskName("已挂起");
                                 item.setSuspendState("2");
                                 item.setSuspendStateName("已挂起");
                             } else {
-                                item.setTaskName(taskEntity.getName());
+                                item.setTaskName(task.get("name").toString());
                                 item.setSuspendState("1");
                                 item.setSuspendStateName("已激活");
                             }
                         } else {
                             // 已办结或者已撤销
                             List<HistoricTaskInstance> taskInstanceList = remoteActivitiService.queryHistoryByInstanceId(item.getInstanceId(),
-                                    SecurityConstants.INNER);
+                                    SecurityConstants.INNER).getData();
                             if (!CollectionUtils.isEmpty(taskInstanceList)) {
                                 HistoricTaskInstance taskInstance = taskInstanceList.get(0);
                                 if (StringUtils.isNotBlank(taskInstance.getDeleteReason())) {
@@ -172,12 +170,12 @@ public class BizLeaveServiceImpl implements IBizLeaveService
         // 请假的业务ID，作为流程的key
         String businessKey = entity.getId().toString();
         // 启动流程，设置业务key
-        ProcessInstanceCreateRequest request = new ProcessInstanceCreateRequest();
+        ProcessInstanceStartRequest request = new ProcessInstanceStartRequest();
         request.setBusinessKey(businessKey);
         request.setProcessDefinitionKey(key);
-        request.setVariables(new ArrayList<>());
+        request.setUsername(applyUserId);
         ProcessInstanceResponse response = remoteActivitiService
-                .startProcessInstanceByDefinitionId(request);
+                .startProcessInstance(request).getData();
         // 流程实例ID
         String processInstanceId = response.getId();
 
@@ -185,7 +183,7 @@ public class BizLeaveServiceImpl implements IBizLeaveService
         InstanceBusiness instanceBusiness = new InstanceBusiness();
         instanceBusiness.setBusinessKey(businessKey);
         instanceBusiness.setInstanceId(processInstanceId);
-        instanceBusiness.setModule(CharConvertUtil.humpToLine(entity.getClass().getSimpleName().substring(1)));
+        instanceBusiness.setModule(CharConvertUtil.humpToLine(entity.getClass().getSimpleName()));
         remoteActivitiService.addInstanceBusiness(instanceBusiness, SecurityConstants.INNER);
         // 更新请假业务流程实例ID
         entity.setInstanceId(processInstanceId);

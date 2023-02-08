@@ -22,11 +22,11 @@ public class HistoryController {
 
     // Todo 待使用Activiti接口测试
     @GetMapping("/queryHistoryByInstanceId/{instanceId}")
-    public List<HistoricTaskInstance> queryHistoryByInstanceId(@PathVariable("instanceId") String instanceId) {
-        return historyService.createHistoricTaskInstanceQuery()
+    public R<List<HistoricTaskInstance>> queryHistoryByInstanceId(@PathVariable("instanceId") String instanceId) {
+        return R.ok(historyService.createHistoricTaskInstanceQuery()
                 .processInstanceId(instanceId)
                 .orderByTaskCreateTime()
                 .desc()
-                .list();
+                .list());
     }
 }

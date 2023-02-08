@@ -1,11 +1,14 @@
 package com.ruoyi.activiti.api;
 
 import com.ruoyi.activiti.api.domain.InstanceBusiness;
+import com.ruoyi.activiti.api.domain.ProcessInstanceStartRequest;
 import com.ruoyi.common.core.constant.SecurityConstants;
 import com.ruoyi.common.core.constant.ServiceNameConstants;
 import com.ruoyi.common.core.domain.R;
 import java.util.List;
+import java.util.Map;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.rest.service.api.runtime.process.ProcessInstanceCreateRequest;
 import org.activiti.rest.service.api.runtime.process.ProcessInstanceResponse;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Redick01
@@ -42,13 +46,21 @@ public interface RemoteActivitiService {
             ProcessInstanceCreateRequest request);
 
     /**
+     * 开始一个流程
+     * @param request 请求参数
+     * @return 流程实例
+     */
+    @PostMapping("/process/startProcessInstance")
+    @ResponseBody R<ProcessInstanceResponse> startProcessInstance(@RequestBody ProcessInstanceStartRequest request);
+
+    /**
      * 根据流程实例ID获取Task列表
      * @param instanceId 实例ID
      * @param source source
      * @return Task列表
      */
     @GetMapping("/task/queryTaskListByInstanceId/{instanceId}")
-    Task queryTaskListByInstanceId(@PathVariable("instanceId") String instanceId,
+    R<Map<String, Object>> queryTaskListByInstanceId(@PathVariable("instanceId") String instanceId,
             @RequestHeader(SecurityConstants.INNER) String source);
 
     /**
@@ -58,6 +70,6 @@ public interface RemoteActivitiService {
      * @return 历史列表
      */
     @GetMapping("/history/queryHistoryByInstanceId/{instanceId}")
-    List<HistoricTaskInstance> queryHistoryByInstanceId(@PathVariable("instanceId") String instanceId,
+    R<List<HistoricTaskInstance>> queryHistoryByInstanceId(@PathVariable("instanceId") String instanceId,
             @RequestHeader(SecurityConstants.INNER) String source);
 }

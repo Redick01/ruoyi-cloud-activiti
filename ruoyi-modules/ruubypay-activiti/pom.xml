@@ -173,6 +173,10 @@
         </dependency>
         <dependency>
             <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-activiti</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-security</artifactId>
         </dependency>
         <!-- xml解析依赖-->

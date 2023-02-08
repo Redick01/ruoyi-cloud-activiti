@@ -19,7 +19,7 @@ public class InstanceBusiness {
     private String module;
 
     public boolean isNotEmpty() {
-        return null != this.id && StringUtils.isNotEmpty(this.instanceId)
+        return StringUtils.isNotEmpty(this.instanceId)
                 && StringUtils.isNotEmpty(this.businessKey) && StringUtils.isNotEmpty(this.module);
     }
 }

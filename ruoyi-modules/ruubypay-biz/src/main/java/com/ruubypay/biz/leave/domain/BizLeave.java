@@ -69,6 +69,15 @@ public class BizLeave extends ProcessEntity
     @Excel(name = "实际结束时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date realityEndTime;
 
+    /** 流程定义key */
+    @Excel(name = "流程定义key")
+    private String processKey;
+
+    /** 删除标志（0代表存在 2代表删除） */
+    private String delFlag;
+
+    private String applyUserId;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -178,6 +187,30 @@ public class BizLeave extends ProcessEntity
         return realityEndTime;
     }
 
+    public String getProcessKey() {
+        return processKey;
+    }
+
+    public void setProcessKey( String processKey ) {
+        this.processKey = processKey;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag( String delFlag ) {
+        this.delFlag = delFlag;
+    }
+
+    public String getApplyUserId() {
+        return applyUserId;
+    }
+
+    public void setApplyUserId( String applyUserId ) {
+        this.applyUserId = applyUserId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -197,6 +230,9 @@ public class BizLeave extends ProcessEntity
             .append("applyTime", getApplyTime())
             .append("realityStartTime", getRealityStartTime())
             .append("realityEndTime", getRealityEndTime())
+                .append("processKey", getProcessKey())
+                .append("delFlag", getDelFlag())
+                .append("applyUserId", getApplyUserId())
             .toString();
     }
 }

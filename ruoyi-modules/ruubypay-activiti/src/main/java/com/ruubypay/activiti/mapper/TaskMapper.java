@@ -152,7 +152,7 @@ public interface TaskMapper {
     Integer findDoneCount(TaskVo taskVo);
 
     @Insert(" INSERT INTO INSTANCE_BUSINESS (instance_id, business_key, module) VALUES (#{instanceId}, #{businessKey}, #{module}) ")
-    int insertInstanceBusiness( InstanceBusiness instanceBusiness);
+    int insertInstanceBusiness(InstanceBusiness instanceBusiness);
 
     @Select(" SELECT * FROM INSTANCE_BUSINESS WHERE 1=1 AND INSTANCE_ID = #{instanceId} LIMIT 1 ")
     Map<String, Object> selectInstanceBusinessByInstanceId(String instanceId);

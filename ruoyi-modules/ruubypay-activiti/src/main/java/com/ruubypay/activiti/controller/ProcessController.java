@@ -1,5 +1,6 @@
 package com.ruubypay.activiti.controller;
 
+import com.ruoyi.activiti.api.domain.ProcessInstanceStartRequest;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.exception.CustomException;
 import com.ruoyi.common.core.utils.StringUtils;
@@ -17,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,6 +28,7 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.FlowNode;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -36,6 +39,7 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.rest.service.api.runtime.process.ProcessInstanceResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,6 +65,24 @@ public class ProcessController extends BaseController {
 
     private final RuntimeService runtimeService;
 
+    private final IdentityService identityService;
+
+    @PostMapping("/startProcessInstance")
+    public @ResponseBody R<ProcessInstanceResponse> startProcessInstance(@RequestBody ProcessInstanceStartRequest request) {
+        // 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
+        identityService.setAuthenticatedUserId(request.getUsername());
+        // 启动流程时设置业务 key
+        ProcessInstance instance = runtimeService.startProcessInstanceByKey(request.getProcessDefinitionKey()
+                , request.getBusinessKey(), new HashMap<>());
+        ProcessInstanceResponse response = new ProcessInstanceResponse();
+        response.setId(instance.getId());
+        response.setBusinessKey(instance.getBusinessKey());
+        response.setProcessDefinitionId(instance.getProcessDefinitionId());
+        response.setProcessDefinitionKey(instance.getProcessDefinitionKey());
+        response.setName(instance.getName());
+        return R.ok(response);
+    }
+
     /**
      * 审批历史列表
      */
@@ -76,7 +98,7 @@ public class ProcessController extends BaseController {
      * 进度查看
      */
     @RequestMapping(value = "/read-resource")
-    public void readResource( String pProcessInstanceId, HttpServletResponse response )
+    public void readResource(String pProcessInstanceId, HttpServletResponse response)
             throws Exception {
         // 设置页面不缓存
         response.setHeader("Pragma", "No-cache");

@@ -29,11 +29,13 @@ import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.StartEvent;
 import org.activiti.bpmn.model.SubProcess;
 import org.activiti.image.impl.DefaultProcessDiagramGenerator;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 /**
  * @author Redick01
  */
+@Component
 public class CustomProcessDiagramGenerator extends DefaultProcessDiagramGenerator implements ICustomProcessDiagramGenerator {
 
     //预初始化流程图绘制，大大提升了系统启动后首次查看流程图的速度
